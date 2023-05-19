@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tafeldienst 8a</title>
+    <script>
+        function getRandomNames() {
+            var names = ["Ole", "Tom", "Aurelio", "Jonatan", "Leandro", "Lasse", "Max", "Samuel", "Emilian", "Meiko", "Engin", "Tarik", "Liam", "Lars", "Marlon", "Frieda", "Frida", "Martha", "Charlotte", "Ella", "Janne", "Carlotta", "Ana-Marija", "Oranan", "Ece", "Greta", "Paula"];
+            var selectedNames = [];
+
+            while (selectedNames.length < 2) {
+                var randomIndex = Math.floor(Math.random() * names.length);
+                var randomName = names[randomIndex];
+
+                if (!selectedNames.includes(randomName)) {
+                    selectedNames.push(randomName);
+                }
+            }
+
+            return selectedNames;
+        }
+
+        function displayRandomNames() {
+            var randomNames = getRandomNames();
+            var namesContainer = document.getElementById("namesContainer");
+            namesContainer.innerHTML = "";
+
+            randomNames.forEach(function(name) {
+                var nameElement = document.createElement("p");
+                nameElement.textContent = name;
+                namesContainer.appendChild(nameElement);
+            });
+        }
+
+        function checkAndDisplayNames() {
+            var today = new Date();
+            if (today.getDay() === 1) { // Montag
+                displayRandomNames();
+            }
+        }
+
+        setInterval(checkAndDisplayNames, 1000); // Überprüfung jede Sekunde
+    </script>
+</head>
+<body>
+    <h1>Tafeldienst:</h1>
+    <div id="namesContainer"></div>
+</body>
+</html>
