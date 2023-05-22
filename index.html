@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tafeldienst 8a</title>
+    <title>Zufällige Namen</title>
     <script>
         function getRandomNames() {
             var names = ["Ole", "Tom", "Aurelio", "Jonatan", "Leandro", "Lasse", "Max", "Samuel", "Emilian", "Meiko", "Engin", "Tarik", "Liam", "Lars", "Marlon", "Frieda", "Frida", "Martha", "Charlotte", "Ella", "Janne", "Carlotta", "Ana-Marija", "Oranan", "Ece", "Greta", "Paula"];
-            var selectedNames = [];
+            var selectedNames = localStorage.getItem("selectedNames");
 
-            while (selectedNames.length < 2) {
-                var randomIndex = Math.floor(Math.random() * names.length);
-                var randomName = names[randomIndex];
+            if (!selectedNames) {
+                // Wenn keine Namen im Local Storage gefunden werden, wähle zwei neue Namen aus
+                while (selectedNames.length < 2) {
+                    var randomIndex = Math.floor(Math.random() * names.length);
+                    var randomName = names[randomIndex];
 
-                if (!selectedNames.includes(randomName)) {
-                    selectedNames.push(randomName);
+                    if (!selectedNames.includes(randomName)) {
+                        selectedNames.push(randomName);
+                    }
                 }
+
+                // Speichere die ausgewählten Namen im Local Storage
+                localStorage.setItem("selectedNames", JSON.stringify(selectedNames));
+            } else {
+                selectedNames = JSON.parse(selectedNames);
             }
 
             return selectedNames;
@@ -34,15 +42,19 @@
         function checkAndDisplayNames() {
             var today = new Date();
             if (today.getDay() === 1) { // Montag
-                displayRandomNames();
+                // Lösche die gespeicherten Namen im Local Storage
+                localStorage.removeItem("selectedNames");
             }
+
+            displayRandomNames();
         }
 
         setInterval(checkAndDisplayNames, 1000); // Überprüfung jede Sekunde
     </script>
 </head>
 <body>
-    <h1>Tafeldienst:</h1>
+    <h1>Zufällige Namen</h1>
     <div id="namesContainer"></div>
 </body>
 </html>
+
