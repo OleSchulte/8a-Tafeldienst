@@ -1,73 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tafeldienst 8a</title>
+    <title>Zufällige Namen</title>
     <script>
-        function getRandomNames() {
-            var names = ["Ole", "Tom", "Aurelio", "Jonatan", "Leandro", "Lasse", "Max", "Samuel", "Emilian", "Meiko", "Engin", "Tarik", "Liam", "Lars", "Marlon", "Frieda", "Frida", "Martha", "Charlotte", "Ella", "Janne", "Carlotta", "Ana-Marija", "Oranan", "Ece", "Greta", "Paula"];
-            var selectedNames = [];
-
-            while (selectedNames.length < 2) {
-                var randomIndex = Math.floor(Math.random() * names.length);
-                var randomName = names[randomIndex];
-
-                if (!selectedNames.includes(randomName)) {
-                    selectedNames.push(randomName);
-                }
-            }
-
-            return selectedNames;
-        }
-
-        function displayRandomNames() {
-            var randomNames = getRandomNames();
+        function displayRandomNames(names) {
             var namesContainer = document.getElementById("namesContainer");
             namesContainer.innerHTML = "";
 
-            randomNames.forEach(function(name) {
+            names.forEach(function(name) {
                 var nameElement = document.createElement("p");
                 nameElement.textContent = name;
                 namesContainer.appendChild(nameElement);
             });
-
-            localStorage.setItem("randomNames", JSON.stringify(randomNames)); // Speichern der Namen im Local Storage
         }
-
-        function checkAndDisplayNames() {
-            var today = new Date();
-            if (today.getDay() === 1) { // Montag
-                var storedNames = localStorage.getItem("randomNames");
-                if (storedNames) {
-                    var parsedNames = JSON.parse(storedNames);
-                    var storedDate = new Date(localStorage.getItem("randomNamesDate"));
-                    var oneWeekLater = new Date(storedDate.getTime() + (7 * 24 * 60 * 60 * 1000));
-
-                    if (today > oneWeekLater) { // Überprüfen, ob eine Woche vergangen ist
-                        displayRandomNames();
-                        localStorage.setItem("randomNamesDate", today);
-                    } else { // Ansonsten die gespeicherten Namen anzeigen
-                        var namesContainer = document.getElementById("namesContainer");
-                        namesContainer.innerHTML = "";
-
-                        parsedNames.forEach(function(name) {
-                            var nameElement = document.createElement("p");
-                            nameElement.textContent = name;
-                            namesContainer.appendChild(nameElement);
-                        });
-                    }
-                } else { // Wenn keine gespeicherten Namen vorhanden sind, neue Namen anzeigen
-                    displayRandomNames();
-                    localStorage.setItem("randomNamesDate", today);
-                }
-            }
-        }
-
-        setInterval(checkAndDisplayNames, 1000); // Überprüfung jede Sekunde
     </script>
 </head>
 <body>
     <h1>Tafeldienst 8a</h1>
     <div id="namesContainer"></div>
+    <script src="script.js"></script>
 </body>
 </html>
 
